@@ -1,0 +1,49 @@
+{
+    "name": "awsome-chat-cf-infra",
+    "version": "0.1.0",
+    "bin": {
+        "app": "bin/app.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "build:all": "tsc && cd app/backend && npm run bundle && cd ./../..",
+        "install:all": "npm install && cd app/backend && npm install",
+        "watch": "tsc -w",
+        "cdk": "cdk",
+        "cdk-deploy": "npm run build:all && dotenv cdk deploy --require-approval never --profile $AWS_PROFILE '*' && npm run update-frontend-web-socket-uri",
+        "cdk-destroy": "npm run build:all && dotenv cdk destroy --require-approval never --profile $AWS_PROFILE '*'",
+        "cdk-diff": "npm run build:all && dotenv cdk diff --require-approval never --profile $AWS_PROFILE '*'",
+        "cdk-synth": "npm run build:all && dotenv cdk synth --require-approval never --profile $AWS_PROFILE '*'",
+        "cdk-bootstrap": "npm run build:all && dotenv cdk bootstrap --profile $AWS_PROFILE",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "spell": "cspell \"**/*\"",
+        "update-frontend-web-socket-uri": "env AWS_SDK_LOAD_CONFIG='true' ts-node scripts/updateFrontendWsUri.ts"
+    },
+    "devDependencies": {
+        "@aws-cdk/assert": "^2.63.2",
+        "@types/fs-extra": "^9.0.8",
+        "@types/node": "^18.11.9",
+        "@types/source-map-support": "^0.5.3",
+        "aws-cdk": "^2.63.2",
+        "aws-sdk": "^2.1309.0",
+        "cspell": "^6.14.2",
+        "dotenv-cli": "^6.0.0",
+        "prettier": "^2.7.1",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.2.0"
+    },
+    "dependencies": {
+        "@aws-cdk/aws-apigatewayv2": "^1.191.0",
+        "@aws-cdk/aws-apigatewayv2-integrations": "^1.191.0",
+        "@aws-cdk/aws-dynamodb": "^1.191.0",
+        "@aws-cdk/aws-iam": "^1.191.0",
+        "@aws-cdk/aws-lambda": "^1.191.0",
+        "@aws-cdk/aws-logs": "^1.191.0",
+        "@aws-cdk/aws-s3": "^1.191.0",
+        "@aws-cdk/aws-s3-deployment": "^1.191.0",
+        "@aws-cdk/core": "^1.191.0",
+        "fs-extra": "^10.1.0",
+        "source-map-support": "^0.5.16"
+    }
+}
